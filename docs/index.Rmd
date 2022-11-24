@@ -1,11 +1,12 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
-date: '2022-11-01'
+title: "A4: Racial Disparities in Incarcerations"
+author: "Thu La"
+date: '2022-11-20'
 output: html_document
 ---
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE}
+setwd(dirname(getwd()))
 source("../source/a4-helpers.R")
 source("../source/analysis.R")
 ```
@@ -34,12 +35,16 @@ print(sum)
 ```
 
 ## Introduction 
-[TODO]
+According to the Vera Institute, the U.S prison population rose about 400 percent from 1970 to 2020. Over 80 percent of these arrests are a result of over-criminalization for low-level crimes related to poverty and people of color. 
+Issues that derived from over-criminalization includes overpopulated jails and prisons, disproportionate imprisonment of minorities, and long-lasting psychological and physical trauma. Using this data, we can see that the direct stakeholders affected by this would be jails and prison institutions because they are receiving incarcerated people and must provide for them. Another direct stakeholder could be policymakers that wants to use this data in order to understand the affected population and formulate ways to reduce the ongoing issues related to incarceration trends. Indirect stakeholders would be the citizens, depending the rules and regulations policymakers create, this can either exacerbate or reduce the issues on criminalization rates for minorities. 
+This data values statistical representation regarding incarceration trends based on gender and race in different factors. But since each person is represented by a number, a value tension that can arise from this could be oversimplification of data. This means that there are is no data for the reason of incarceration in order to have a deeper understanding of what issue is being used against which race the most and ways to improve these rules in the future. 
+The questions I will be researching using this data would be:
+* Which county has the highest number of incarcerations in jail and prison in each state from 1970 to 2018?
+* What are the incarceration changes over time in each state?
 
 ## Data Summary 
-[TODO]
+The counties with the most jail population from 1970 to 2018 are `r max_jail_pop` and the counties with the most prison population from 1970 to 2018 are `r max_prison_pop`. The changes with jail population over time are `r jail_incar_over_time` and for prison, they are `r prison_incar_over_time`. 
 
 [TODO ... other sections ... See Canvas for details]
 
 _All the very best with your work!_
-
