@@ -43,7 +43,19 @@ The questions I will be researching using this data would be:
 * What are the incarceration changes over time in each state?
 
 ## Data Summary 
-The counties with the most jail population from 1970 to 2018 are `r max_jail_pop` and the counties with the most prison population from 1970 to 2018 are `r max_prison_pop`. The changes with jail population over time are `r jail_incar_over_time` and for prison, they are `r prison_incar_over_time`. 
+The counties with the most jail population from 1970 to 2018 are `r max_jail_pop`, we can see that Los Angeles County is the county with the highest jail population. In that county, the top three race populations are latinx, black, and white. The latinx population has a count of about 304,327 people and that is about 37.6 percent of the total jail population for that county. The counties with the most prison population from 1970 to 2018 are `r max_prison_pop`, and Los Angeles County is also the county with the highest prison population with 1,541,460 people people. The top three race populations for Los Angeles County are black, latinx, and white, with the black population having 592,955 people and making up about 38.5 percent of the total jail population. This information corroborates with the issue that people of color are the most common population experiencing incarcerations. This table shows jail population over time in each state `r jail_incar_over_time` and for prison, it is `r prison_incar_over_time`. This data shows the yearly increase/decrease in jail populations and prison populations from 1970 to 2018.
+
+This is a bar chart that shows the yearly jail population from 1970 to 2018:
+``` {r echo=FALSE}
+plot_jail_pop_for_us()
+```
+This shows that within 48 years, the yearly jail population increased by at least 4 times of what it was in 1970. In 1970, the population is about 150,000 people, and in 2018, the population is about 720,000. This is an increase of around 480 percent within 48 years, which means the jail population is increasing by 10 percent each year.
+
+This line chart shows the growing jail population from 1970 to 2018 for each state:
+``` {r echo=FALSE, message = FALSE}
+plot_jail_pop_by_states()
+```
+This chart shows that the state with the max jail population is California with about 75,000 people in 2018, followed by 70,000 in Texas, 55,000 in Florida, and 43,000 in Georgia.
 
 [TODO ... other sections ... See Canvas for details]
 
