@@ -3,39 +3,39 @@ title: 'A4: Racial Disparities in Incarcerations'
 author: "Thu La"
 date: "2022-11-20"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE}
-source("../source/analysis.R")
+source("../a4-tkl22-1961346/source/analysis.R")
 ```
 
 ## Abstract 
-Incarceration trends has been an ongoing issue that's been demonstrated to target minorities throughout the U.S. The Vera Institute compiled a dataset containing incarceration trends across U.S. counties since 1970 to 2018, and used this data to show that people of color have higher chances of incarcerations due to their race. This report will discuss the racial inequalities and show that minorities have a higher chance of going to prison.
+####Incarceration trends has been an ongoing issue that's been demonstrated to target minorities throughout the U.S. The Vera Institute compiled a dataset containing incarceration trends across U.S. counties since 1970 to 2018, and used this data to show that people of color have higher chances of incarcerations due to their race. This report will discuss the racial inequalities and show that minorities have a higher chance of going to prison.
 
 ## Introduction 
-According to the Vera Institute, the U.S prison population rose about 400 percent from 1970 to 2020. Over 80 percent of these arrests are a result of over-criminalization for low-level crimes related to poverty and people of color. 
-Issues that derived from over-criminalization includes overpopulated jails and prisons, disproportionate imprisonment of minorities, and long-lasting psychological and physical trauma. Using this data, we can see that the direct stakeholders affected by this would be jails and prison institutions because they are receiving incarcerated people and must provide for them. Another direct stakeholder could be policymakers that wants to use this data in order to understand the affected population and formulate ways to reduce the ongoing issues related to incarceration trends. Indirect stakeholders would be the citizens, depending the rules and regulations policymakers create, this can either exacerbate or reduce the issues on criminalization rates for minorities. 
-This data values statistical representation regarding incarceration trends based on gender and race in different factors. But since each person is represented by a number, a value tension that can arise from this could be oversimplification of data. This means that there are is no data for the reason of incarceration in order to have a deeper understanding of what issue is being used against which race the most and ways to improve these rules in the future. 
-The questions I will be researching using this data would be:
+####According to the _Vera Institute_, the U.S prison population rose about 400 percent from 1970 to 2020. Over 80 percent of these arrests are a result of over-criminalization for low-level crimes related to poverty and people of color. 
+####Issues that derived from over-criminalization includes overpopulated jails and prisons, disproportionate imprisonment of minorities, and long-lasting psychological and physical trauma. Using this data, we can see that the direct stakeholders affected by this would be jails and prison institutions because they are receiving incarcerated people and must provide for them. Another direct stakeholder could be policymakers that wants to use this data in order to understand the affected population and formulate ways to reduce the ongoing issues related to incarceration trends. Indirect stakeholders would be the citizens, depending the rules and regulations policymakers create, this can either exacerbate or reduce the issues on criminalization rates for minorities. 
+####This data values statistical representation regarding incarceration trends based on gender and race in different factors. But since each person is represented by a number, a value tension that can arise from this could be oversimplification of data. This means that there are is no data for the reason of incarceration in order to have a deeper understanding of what issue is being used against which race the most and ways to improve these rules in the future. 
+####The questions I will be researching using this data would be:
 * Which county has the highest number of incarcerations in jail and prison in each state from 1970 to 2018?
 * What are the incarceration changes over time in each state?
 
 ## Data Summary 
-The counties with the most jail population from 1970 to 2018 are `r max_jail_pop`, we can see that Los Angeles County is the county with the highest jail population. In that county, the top three race populations are latinx, black, and white. The latinx population has a count of about 304,327 people and that is about 37.6 percent of the total jail population for that county. The counties with the most prison population from 1970 to 2018 are `r max_prison_pop`, and Los Angeles County is also the county with the highest prison population with 1,541,460 people people. The top three race populations for Los Angeles County are black, latinx, and white, with the black population having 592,955 people and making up about 38.5 percent of the total jail population. This information corroborates with the issue that people of color are the most common population experiencing incarcerations. This table shows jail population over time in each state `r jail_incar_over_time` and for prison, it is `r prison_incar_over_time`. This data shows the yearly increase/decrease in jail populations and prison populations from 1970 to 2018.
+####The counties with the most jail population from 1970 to 2018 are `r max_jail_pop`, we can see that Los Angeles County is the county with the highest jail population. In that county, the top three race populations are latinx, black, and white. The latinx population has a count of about 304,327 people and that is about 37.6 percent of the total jail population for that county. The counties with the most prison population from 1970 to 2018 are `r max_prison_pop`, and Los Angeles County is also the county with the highest prison population with 1,541,460 people people. The top three race populations for Los Angeles County are black, latinx, and white, with the black population having 592,955 people and making up about 38.5 percent of the total jail population. This information corroborates with the issue that people of color are the most common population experiencing incarcerations. This table shows jail population over time in each state `r jail_incar_over_time` and for prison, it is `r prison_incar_over_time`. This data shows the yearly increase/decrease in jail populations and prison populations from 1970 to 2018.
 
 This is a bar chart that shows the yearly jail population from 1970 to 2018:
 ``` {r echo=FALSE}
 plot_jail_pop_for_us()
 ```
-This shows that within 48 years, the yearly jail population increased by at least 4 times of what it was in 1970. In 1970, the population is about 150,000 people, and in 2018, the population is about 720,000. This is an increase of around 480 percent within 48 years, which means the jail population is increasing by 10 percent each year.
+####This shows that within 48 years, the yearly jail population increased by at least 4 times of what it was in 1970. In 1970, the population is about 150,000 people, and in 2018, the population is about 720,000. This is an increase of around 480 percent within 48 years, which means the jail population is increasing by 10 percent each year.
 
 This line chart shows the growing jail population from 1970 to 2018 for each state:
 ``` {r echo=FALSE, message = FALSE}
 plot_jail_pop_by_states()
 ```
-This chart shows that the state with the max jail population is California with about 75,000 people in 2018, followed by 70,000 in Texas, 55,000 in Florida, and 43,000 in Georgia.
+####This chart shows that the state with the max jail population is California with about 75,000 people in 2018, followed by 70,000 in Texas, 55,000 in Florida, and 43,000 in Georgia.
 
 This bar graph shows the race groups in jail population pertaining to each state:
 ``` {r echo=FALSE, message = FALSE, warning = FALSE}
@@ -44,5 +44,5 @@ plot_state_race_pop()
 ``` {r echo=FALSE, message = FALSE, warning = FALSE}
 plot_total_state_pop()
 ``` 
-These two graphs shows that although that the White population is the race majority in each state being about 30-85 percent of the total state population. Whereas the combined Black, Latinx, Asian American/Pacific Islander, and Native populations account for about 10-60 percent of the total state population. In the chart for race populations in jail, the top 3 race populations are White, Black, and Latinx, despite the Black and Latinx populations being the minorities in each state.
+####These two graphs shows that although that the White population is the race majority in each state being about 30-85 percent of the total state population. Whereas the combined Black, Latinx, Asian American/Pacific Islander, and Native populations account for about 10-60 percent of the total state population. In the chart for race populations in jail, the top 3 race populations are White, Black, and Latinx, despite the Black and Latinx populations being the minorities in each state.
 

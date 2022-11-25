@@ -5,11 +5,10 @@ library("plotly")
 library("stringr")
 library("rjson")
 
-
 ## Section 2  ----
 #----------------------------------------------------------------------------#
 # Reading data
-orig_incarceration_trends <- read.csv("./data/incarceration_trends.csv")
+orig_incarceration_trends <- read.csv("../a4-tkl22-1961346/data/incarceration_trends.csv")
 
 # Filtering columns
 incarceration_trends <- orig_incarceration_trends[, -c(
@@ -251,6 +250,21 @@ plot_total_state_pop <- function() {
 #----------------------------------------------------------------------------#
 # <a map shows potential patterns of inequality that vary geographically>
 # Your functions might go here ... <todo:  update comment>
+
+state_county_info <- orig_incarceration_trends %>%
+  filter(year == "2018") %>%
+  select(
+    county_name, state, aapi_pop_15to64, black_pop_15to64,
+    latinx_pop_15to64, native_pop_15to64, white_pop_15to64, aapi_jail_pop,
+    black_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop
+  ) %>%
+  group_by(state, county_name) %>%
+  summarise(across(everything(), sum, na.rm = TRUE)) %>%
+  gather("Total_Population", total_pop_15to64, 3:7) %>%
+  gather("Jail_Population", total_jail_pop, 3:8) %>%
+  group_by(state, county_name) %>%
+  arrange(by = state)
+
 get_state_county_info <- function() {
   state_county_info <- orig_incarceration_trends %>%
     filter(year == "2018") %>%
@@ -283,3 +297,4 @@ print(state_county_chart)
 #----------------------------------------------------------------------------#
 
 ## Load data frame ----
+
