@@ -31,9 +31,9 @@ jail_pop <- jail_pop %>%
 
 max_jail_pop <- jail_pop %>%
   filter(total_jail_pop == max(total_jail_pop, na.rm = TRUE)) %>%
-  group_by(state) %>%
+  group_by(total_jail_pop) %>%
   select(state, location, total_jail_pop, aapi_jail_pop, black_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop) %>%
-  slice(which.max(total_jail_pop))
+  arrange(by = -total_jail_pop)
 
 # Prison population
 prison_pop <- incarceration_trends %>%
@@ -46,9 +46,9 @@ prison_pop <- prison_pop %>%
 
 max_prison_pop <- prison_pop %>%
   filter(total_prison_pop == max(total_prison_pop, na.rm = TRUE)) %>%
-  group_by(state) %>%
+  group_by(total_prison_pop) %>%
   select(state, location, total_prison_pop, aapi_prison_pop, black_prison_pop, latinx_prison_pop, native_prison_pop, white_prison_pop, other_race_prison_pop) %>%
-  slice(which.max(total_prison_pop))
+  arrange(by = -total_prison_pop)
 
 # Which year did each state experienced the most jail population spike
 jail_incar_over_time <- incarceration_trends %>%
@@ -291,7 +291,6 @@ state_county_chart <- plot_ly(get_state_county_info(), locationmode = "USA-state
     color = ~state_county_info$Total_Population,
     colors = "Blues"
   )
-
 
 print(state_county_chart)
 #----------------------------------------------------------------------------#
