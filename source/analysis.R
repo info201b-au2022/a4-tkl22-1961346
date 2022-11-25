@@ -1,26 +1,10 @@
-library(tidyverse)
+library("tidyverse")
 library("dplyr")
 library("ggplot2")
-library("ggrepel")
+library("plotly")
+library("stringr")
+library("rjson")
 
-
-# The functions might be useful for A4
-source("./source/a4-helpers.R")
-
-## Test queries ----
-#----------------------------------------------------------------------------#
-# Simple queries for basic testing
-#----------------------------------------------------------------------------#
-# Return a simple string
-test_query1 <- function() {
-  return("Hello world")
-}
-
-# Return a vector of numbers
-test_query2 <- function(num = 6) {
-  v <- seq(1:num)
-  return(v)
-}
 
 ## Section 2  ----
 #----------------------------------------------------------------------------#
@@ -154,6 +138,16 @@ plot_jail_pop_for_us <- function() {
     )
   return(yearly_jail_plot)
 }
+
+yearly_jail_plot <- ggplot(get_year_jail_pop()) +
+  geom_col(mapping = aes(x = year, y = total_jail_pop)) +
+  scale_y_continuous(breaks = c(0, 200000, 400000, 600000, 800000), labels = scales::comma) +
+  labs(
+    title = "Increase of Jail Population in U.S. (1970-2018)",
+    x = "Year",
+    y = "Total Jail Population"
+  )
+
 #----------------------------------------------------------------------------#
 
 
@@ -175,25 +169,81 @@ get_jail_pop_by_states <- function(states) {
 plot_jail_pop_by_states <- function(states) {
   jail_states_plot <- ggplot(get_jail_pop_by_states()) +
     geom_line(mapping = aes(x = year, y = total_jail_pop, group = state, color = state)) +
-    geom_text(data = subset(get_jail_pop_by_states(), year == "2018"),
-              aes(label = state, color = state, x = year, y = total_jail_pop),
-              hjust = -1) +
+    geom_text(
+      data = subset(get_jail_pop_by_states(), year == "2018"),
+      aes(label = state, color = state, x = year, y = total_jail_pop),
+      hjust = -1
+    ) +
     ggtitle("Growth of Jail Population by State (1970-2018)") +
     xlab("Year") +
     ylab("Total Jail Population")
   return(jail_states_plot)
 }
-print(plot_jail_pop_by_states())
 
 #----------------------------------------------------------------------------#
 
 ## Section 5  ----
 #----------------------------------------------------------------------------#
-# Race population per state and 
-# Your functions might go here ... <todo:  update comment>
-state_race_pop <- incarceration_trends %>% 
-  select(state, total_jail_pop, aapi_jail_pop, black_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop) %>%
-  
+# Jail race population per state from 1970 to 2018
+# This function shows the population count of each race within the jail population
+state_race_pop <- incarceration_trends %>%
+  select(state, aapi_jail_pop, black_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop) %>%
+  group_by(state) %>%
+  summarise(across(everything(), sum, na.rm = TRUE)) %>%
+  gather(key = Race, value = total_jail_pop, -state) %>%
+  arrange(by = state)
+
+get_state_race_pop <- function() {
+  state_race_pop <- incarceration_trends %>%
+    select(state, aapi_jail_pop, black_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop) %>%
+    group_by(state) %>%
+    summarise(across(everything(), sum, na.rm = TRUE)) %>%
+    gather(key = Race, value = total_jail_pop, -state) %>%
+    arrange(by = state)
+  return(state_race_pop)
+}
+
+# This function is a bar graph that shows the race population percentage in jail
+plot_state_race_pop <- function() {
+  state_race_pop_plot <- ggplot(get_state_race_pop()) +
+    geom_col(aes(x = state, y = total_jail_pop, fill = Race),
+      position = "fill"
+    ) +
+    labs(
+      title = "Race Population in Jail per State (1970-2018)",
+      x = "State",
+      y = "Percentage of Total Jail Population (%)"
+    ) +
+    scale_fill_discrete(labels = c("Asian American/Pacific Islander", "Black", "Latinx", "Native American", "Unknown/Other", "White"))
+  return(state_race_pop_plot)
+}
+
+# Race population per state from 1970 to 2018
+# This function shows the total population count of each race in every state
+get_total_state_pop <- function() {
+  total_state_pop <- orig_incarceration_trends %>%
+    select(state, aapi_pop_15to64, black_pop_15to64, latinx_pop_15to64, native_pop_15to64, white_pop_15to64) %>%
+    group_by(state) %>%
+    summarise(across(everything(), sum, na.rm = TRUE)) %>%
+    gather(key = Race, value = total_pop_15to64, -state) %>%
+    arrange(by = state)
+  return(total_state_pop)
+}
+
+# This function is a bar chart that shows the total race population in each state
+plot_total_state_pop <- function() {
+  state_pop_plot <- ggplot(get_total_state_pop()) +
+    geom_col(aes(x = state, y = total_pop_15to64, fill = Race),
+      position = "fill"
+    ) +
+    labs(
+      title = "Race Population per State (1970-2018)",
+      x = "State",
+      y = "Percentage of Race Population to Total Population (%)"
+    ) +
+    scale_fill_discrete(labels = c("Asian American/Pacific Islander", "Black", "Latinx", "Native American", "White"))
+  return(state_pop_plot)
+}
 
 #----------------------------------------------------------------------------#
 
@@ -201,7 +251,35 @@ state_race_pop <- incarceration_trends %>%
 #----------------------------------------------------------------------------#
 # <a map shows potential patterns of inequality that vary geographically>
 # Your functions might go here ... <todo:  update comment>
-# See Canvas
+get_state_county_info <- function() {
+  state_county_info <- orig_incarceration_trends %>%
+    filter(year == "2018") %>%
+    select(
+      county_name, state, aapi_pop_15to64, black_pop_15to64,
+      latinx_pop_15to64, native_pop_15to64, white_pop_15to64, aapi_jail_pop,
+      black_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop
+    ) %>%
+    group_by(state, county_name) %>%
+    summarise(across(everything(), sum, na.rm = TRUE)) %>%
+    gather("Total_Population", total_pop_15to64, 3:7) %>%
+    gather("Jail_Population", total_jail_pop, 3:8) %>%
+    group_by(state, county_name) %>%
+    arrange(by = state)
+  return(state_county_info)
+}
+
+
+state_county_chart <- plot_ly(get_state_county_info(), locationmode = "USA-states") %>%
+  add_trace(
+    locations = ~state_county_info$county_name,
+    z = ~state_county_info$Total_Population,
+    text = ~state_county_info$county_name,
+    color = ~state_county_info$Total_Population,
+    colors = "Blues"
+  )
+
+
+print(state_county_chart)
 #----------------------------------------------------------------------------#
 
 ## Load data frame ----

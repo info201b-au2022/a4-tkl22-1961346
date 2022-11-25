@@ -1,38 +1,18 @@
 ---
-title: "A4: Racial Disparities in Incarcerations"
+title: 'A4: Racial Disparities in Incarcerations'
 author: "Thu La"
-date: '2022-11-20'
-output: html_document
+date: "2022-11-20"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE}
-setwd(dirname(getwd()))
-source("../source/a4-helpers.R")
 source("../source/analysis.R")
 ```
 
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
-
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
+Incarceration trends has been an ongoing issue that's been demonstrated to target minorities throughout the U.S. The Vera Institute compiled a dataset containing incarceration trends across U.S. counties since 1970 to 2018, and used this data to show that people of color have higher chances of incarcerations due to their race. This report will discuss the racial inequalities and show that minorities have a higher chance of going to prison.
 
 ## Introduction 
 According to the Vera Institute, the U.S prison population rose about 400 percent from 1970 to 2020. Over 80 percent of these arrests are a result of over-criminalization for low-level crimes related to poverty and people of color. 
@@ -57,6 +37,12 @@ plot_jail_pop_by_states()
 ```
 This chart shows that the state with the max jail population is California with about 75,000 people in 2018, followed by 70,000 in Texas, 55,000 in Florida, and 43,000 in Georgia.
 
-[TODO ... other sections ... See Canvas for details]
+This bar graph shows the race groups in jail population pertaining to each state:
+``` {r echo=FALSE, message = FALSE, warning = FALSE}
+plot_state_race_pop()
+```
+``` {r echo=FALSE, message = FALSE, warning = FALSE}
+plot_total_state_pop()
+``` 
+These two graphs shows that although that the White population is the race majority in each state being about 30-85 percent of the total state population. Whereas the combined Black, Latinx, Asian American/Pacific Islander, and Native populations account for about 10-60 percent of the total state population. In the chart for race populations in jail, the top 3 race populations are White, Black, and Latinx, despite the Black and Latinx populations being the minorities in each state.
 
-_All the very best with your work!_
